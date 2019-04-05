@@ -1,0 +1,25 @@
+.jumbotron.jumbotron-fluid
+  .container
+    %h1.display-4= @todo.name
+    %p.lead= @todo.content
+    %hr
+    = form_for :todo, url: todo_path(@todo), method: 'delete', html: { class: 'form-inline' } do
+      %button.btn.btn-outline-primary.btn-lg{"data-target" => "#editTodo", "data-toggle" => "modal", :type => "button"} Edit
+      %button.btn.btn-outline-primary.btn-lg{:type => "submit"} Delete
+
+#editTodo.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "editTodoModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#editTodoModalLabel.modal-title Edit Todo
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        = form_for :todo, url: todo_path(@todo), method: 'patch' do
+          .form-group
+            %label.col-form-label{:for => "todoName"} name:
+            %input#todoName.form-control{:type => "text", :required => true, :name => "todo[name]", :value => @todo.name}
+          .form-group
+            %label.col-form-label{:for => "todoContent"} content:
+            %textarea#todoContent.form-control{:required => true, :name => "todo[content]", :value => @todo.content}
+          %button.btn.btn-primary{:type => "submit"} Submit

@@ -1,4 +1,8 @@
 .jumbotron.jumbotron-fluid
   .container
-    %h1.display-4 Your todolist
+    %h1.display-4 Todo for you in here
     %p.lead Feel to add more, edit or delete todo
+.container
+  .list-group
+    - @todos.each do |t|
+      %a.list-group-item.list-group-item-action{:href => todo_path(t)}= "#{t.name} - #{time_ago_in_words t.created_at}"

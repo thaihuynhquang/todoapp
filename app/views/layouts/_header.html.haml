@@ -1,2 +1,22 @@
 %nav.navbar.navbar-light.bg-light
-  %a.navbar-brand{:href => "#"} TODO
+  %a.navbar-brand{:href => root_path()} TODO
+  %form.form-inline
+    %button.btn.btn-outline-primary.my-2.my-sm-0{"data-target" => "#addTodo", "data-toggle" => "modal", :type => "button"} Add todo
+
+#addTodo.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "addTodoModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#addTodoModalLabel.modal-title New Todo
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        = form_for :todo, url: '/todos' do
+          .form-group
+            %label.col-form-label{:for => "todoName"} name:
+            %input#todoName.form-control{:type => "text", :required => true, :name => "todo[name]"}
+          .form-group
+            %label.col-form-label{:for => "todoContent"} content:
+            %textarea#todoContent.form-control{:required => true, :name => "todo[content]"}
+          %button.btn.btn-primary{:type => "submit"} Submit
+        
